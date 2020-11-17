@@ -36,7 +36,7 @@ function geolocationError(err) {
 // Weather API https://openweathermap.org/current
 function getWeather(longitude, latitude) {
     var apikey = "279ad54354e9b294cca24c90d19796a2";
-    var units = "imperial";
+    var units = "imperial";  // Displays fahrenheit
 
     var settings = {
         "url": `https://api.openweathermap.org/data/2.5/weather?lat=${latitude.toString()}&lon=${longitude.toString()}&units=${units}&appid=${apikey}`,
@@ -53,7 +53,7 @@ function getWeather(longitude, latitude) {
 
 // Cocktaildb API https://www.thecocktaildb.com/api.php
 function getCocktail(cocktailName) {
-    
+
     cocktailName = cocktailName.replace(" ", "%");
     console.log(`cocktailName = ${cocktailName}`);
     var cocktail = {};
@@ -66,7 +66,7 @@ function getCocktail(cocktailName) {
     };
 
     $.ajax(settings).done(function (response) {
-        
+
         cocktail.instructions = response.drinks[0].strInstructions;
         console.log(`response = `, cocktail)
     });
@@ -75,7 +75,7 @@ function getCocktail(cocktailName) {
 
 // Calls
 navigator.geolocation.getCurrentPosition(getGeolocation, geolocationError, geolocationOptions);
-var cocktail = getCocktail("Blue Margarita");
+var cocktail = getCocktail("");
 
 function displayData() {
     console.log(`Current Hour = ${time.hour}`);
@@ -83,3 +83,23 @@ function displayData() {
     console.log(`Current Temperature = ${currentTemp}`);
     console.log(cocktail);
 }
+
+var filteredCocktails = [];
+
+function getRandomDrinks(filteredCocktails) {
+    // select 5 random items from the filteredCocktails array
+    var recommendedDrinks = [];
+
+    for (var i = 0; i < 5; i++) {
+        var m = Math.floor(Math.random() * filteredCocktails.length);
+        recommendedDrinks.push(filteredCocktails[m]);
+
+        // excludes repeated values
+        filteredCocktails.splice(m, 1);
+    }
+
+    return recommendedDrinks;
+}
+
+getRandomDrinks(filteredCocktails);
+console.log(recommendedDrinks);

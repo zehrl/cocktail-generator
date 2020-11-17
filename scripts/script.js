@@ -1,22 +1,19 @@
-// Global Variables
-var currentTemp; // Fahrenheit 
+// ----- Logan's Code ----- :)
 
-// Moment.js https://momentjs.com/docs/#/displaying/
-var time = {
-    hour: moment().format("H"), // 0 to 24 (military)
-    minute: moment().format("m")
-};
+// Global Variables
+var currentTemp; // Fahrenheit
+
+// Moment.js API https://momentjs.com/docs/#/displaying/
+var time = moment().format("HHmm") // 0130-2359 (12:00am - 11:59pm)
 
 // Geolocation API
 var geolocationOptions = {
     enableHighAccuracy: true,
-    timeout: 5000,
+    timeout: 10000,
     maximumAge: 0
 };
 
 function getGeolocation(pos) {
-    console.log(pos);
-
     var crd = pos.coords;
 
     console.log('Your current position is:');
@@ -26,7 +23,6 @@ function getGeolocation(pos) {
     console.log(`------------------------------------`);
 
     getWeather(crd.longitude, crd.latitude);
-
 }
 
 function geolocationError(err) {
@@ -41,45 +37,30 @@ function getWeather(longitude, latitude) {
     var settings = {
         "url": `https://api.openweathermap.org/data/2.5/weather?lat=${latitude.toString()}&lon=${longitude.toString()}&units=${units}&appid=${apikey}`,
         "method": "GET",
-        "timeout": 0,
     };
 
     $.ajax(settings).done(function (response) {
         currentTemp = response.main.temp;
-        displayData();
+        console.log(`Current Temp = ${currentTemp}`)
     });
 
 }
 
 // Cocktaildb API https://www.thecocktaildb.com/api.php
-function getCocktail(cocktailName) {
-    
-    cocktailName = cocktailName.replace(" ", "%");
-    console.log(`cocktailName = ${cocktailName}`);
-    var cocktail = {};
+function getCocktail(cocktailID) {
     var apikey = "1";
 
     var settings = {
-        "url": `https://www.thecocktaildb.com/api/json/v1/${apikey}/search.php?s=${cocktailName}`,
+        "url": `https://www.thecocktaildb.com/api/json/v1/${apikey}/lookup.php?i=${cocktailID}`,
         "method": "GET",
-        "timeout": 0,
     };
-
+    console.log(settings);
     $.ajax(settings).done(function (response) {
-        
-        cocktail.instructions = response.drinks[0].strInstructions;
-        console.log(`response = `, cocktail)
+        console.log(`response = `, response)
+        return response;
     });
 
 }
 
 // Calls
-navigator.geolocation.getCurrentPosition(getGeolocation, geolocationError, geolocationOptions);
-var cocktail = getCocktail("Blue Margarita");
-
-function displayData() {
-    console.log(`Current Hour = ${time.hour}`);
-    console.log(`Current Minute = ${time.minute}`);
-    console.log(`Current Temperature = ${currentTemp}`);
-    console.log(cocktail);
-}
+navigator.geolocation.getCurrentPosition(getGeolocation, geolocationError, geolocationOptions); //Weather

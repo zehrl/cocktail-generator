@@ -7,10 +7,9 @@
 
     <link rel="stylesheet" href="styles/reset.css">
     <link rel="stylesheet" href="styles/style.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-    <title>It's time for a cocktail!</title>
+    <title>It's Five O'Clock Somewhere...</title>
 </head>
 
 <body>
@@ -19,21 +18,26 @@
         <nav class="navbar is-black" role="navigation" aria-label="main navigation">
 
             <div class="navbar-brand">
-                <h1 class="navbar-item">The Cocktail Generator</h1>
+
+                <h1 class="navbar-item title is-1">The Cocktail Generator <i
+                        class="fas fa-glass-martini fa-sm fa-fw"></i></h1>
+
             </div>
 
             <div class="navbar-end">
-                
+
                 <div class="navbar-item">
 
                     <div class="buttons">
 
-                        <a class="button is-light"><strong>Main Page</strong></a>
-                        
-                        <a class="button is-light"><strong>Search Results</strong></a>
-                        
-                        <a class="button is-light"><strong>Saved Recipes</strong></a>
-                    
+                        <a class="button is-info title is-4" href="./index.html"><strong>Start</strong></a>
+
+                        <a class="button is-light title is-4" href="./cocktail-results.html"><strong>Search
+                                Results</strong></a>
+
+                        <a class="button is-light title is-4" href="./cocktails-saved.html"><strong>Saved
+                                Recipes</strong></a>
+
                     </div>
 
                 </div>
@@ -46,6 +50,26 @@
 
     <Main>
 
+        <div class="container">
+            <section class="card mt-8">
+                <div class="card-content">
+                    <h2 class="title is-1 has-text-centered">Let us suggest some drinks for you!</h2>
+
+                    <p class="title is-4 has-text-centered mb-5">"Total abstinence is so excellent a thing that it cannot be carried to too
+                        great an extent. In my
+                        passion for it I even carry it so far as to totally abstain from total abstinence itself."</p>
+
+                    <p class="title is-4 has-text-centered">- Mark Twain <span class="subtitle">(autograph inscription to Lucy Webb Hayes, First Lady and
+                            Temperance Movement Advocate, June
+                            1881)</span></p>
+
+                    <div class="has-text-centered">
+                        <a class="button is-info title is-4" href="./cocktail-results.html"><strong>Somebody get me a drink already!</strong></a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
     </Main>
 
 
@@ -56,7 +80,8 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"
         integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
-    <script src="scripts/script.js"></script>
+    <script src="./scripts/script.js"></script>
+    <script> src = "./scripts/dynamic.js"</script>
 </body>
 
 </html>

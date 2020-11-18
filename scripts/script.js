@@ -409,67 +409,67 @@ var Negroni = {
 }
 
 var Paloma = {
-    drinkID = ["17253", "178327", "178335"],
+    drinkID: ["17253", "178327", "178335"],
     temperature: "HH, LH, WM",
     time: "LM, EA, LA, EV"
 }
 
 var Punch = {
-    drinkID = ["11786", "12087", "12870", "13058", "14364", "14978", "15849", "17182", "17191", "17214", "178312", "178329"],
+    drinkID: ["11786", "12087", "12870", "13058", "14364", "14978", "15849", "17182", "17191", "17214", "178312", "178329"],
     temperature: "HH, LH",
     time: "LM, EA, LA, EV"
 }
 
 var Sangria = {
-    drinkID = ["13020", "13024", "13026"],
+    drinkID: ["13020", "13024", "13026"],
     temperature: "WM, BR, CD",
     time: "LA, EV, NT"
 }
 
 var Screwdriver = {
-    drinkID = ["12162", "12091"],
+    drinkID: ["12162", "12091"],
     temperature: "HH, LH, WM",
     time: "EM, LM, EA, LA"
 }
 
 var Shake = {
-    drinkID = ["14510", "15194", "15951"],
+    drinkID: ["14510", "15194", "15951"],
     temperature: "HH, LH, WM",
     time: "EM, LM, EA"
 }
 
 var Sidecar = {
-    drinkID = ["11128", "12196", "12198"],
+    drinkID: ["11128", "12196", "12198"],
     temperature: "LH, WM",
     time: "LA, EV, NT"
 }
 
 var Sling = {
-    drinkID = ["11146", "11415", "12214", "14482"],
+    drinkID: ["11146", "11415", "12214", "14482"],
     temperature: "LH, WM",
     time: "EA, LA, EV, NT"
 }
 
 var Smash = {
-    drinkID = ["11129", "11147", "11170", "11382", "11417", "11844", "12093", "12158", "12308", "12370", "11004", "13214", "13731", "14306", "16100", "17005"],
+    drinkID: ["11129", "11147", "11170", "11382", "11417", "11844", "12093", "12158", "12308", "12370", "11004", "13214", "13731", "14306", "16100", "17005"],
     temperature: "HH, LH, WM",
     time: "EA, LA, EV, NT"
 }
 
 var Sunrise = {
-    drinkID = ["13621", "14578"],
+    drinkID: ["13621", "14578"],
     temperature: "LH, WM",
     time: "EM, LM, EA"
 }
 
 var Tonic = {
-    drinkID = ["11403", "12460"],
+    drinkID: ["11403", "12460"],
     temperature: "HH, LH, WM",
     time: "LM, EA, LA, EV"
 }
 
 // store all unique cocktail variables into a master array of cocktails 
-var cocktails = [Americano, Aviation, Beach, BeesKnees, Bellini, Blackthorn, BloodyMary, BoraBora, Boxcar, Bramble, CorpseRiver2, Cosmopolitan, CubaLibre, DarkNStormy, Derby, FlyingDutchman, FlyingScotchman, French75, FrenchConnection, Gimlet, GinRickey, Gluehwein, Greyhound, Hemingway, Hot, IrishCream, IrishSpring, IrishRussian, Jitterbug, KentuckyColonel, LemonDrop, LongIslandIcedTea, MaiTai, Manhattan, Mimosa, MulledWine, OldFashioned, PinaColada, QueenElizabeth, Quentin, quickSand, BlackRussian, WhiteRussian, SaltyDog, Sazerac, SeaBreeze, Philosopher, Toddy, Vesper, Zombie, Zorro, Cocktail, HotCoffee, IcedCoffee, Collins, Cooler, Daiquiri, EggNog, Espresso, Fizz, Flip, Julep, Lady, Martini, Mojito, Mule, Negroni, Paloma, Punch, Sangria, Screwdriver, Shake, Sidecar, Sour, Sunrise, Tonic];
+var cocktails = [Americano, Aviation, Beach, BeesKnees, Bellini, BlackThorn, BloodyMary, BoraBora, Boxcar, Bramble, CorpseRiver2, Cosmopolitan, CubaLibre, DarkNStormy, Derby, FlyingDutchman, FlyingScotchman, French75, FrenchConnection, Gimlet, GinRickey, Gluehwein, Greyhound, Hemingway, Hot, IrishCream, IrishSpring, IrishRussian, Jitterbug, KentuckyColonel, LemonDrop, LongIslandIcedTea, MaiTai, Manhattan, Mimosa, MulledWine, OldFashioned, PinaColada, QueenElizabeth, Quentin, quickSand, BlackRussian, WhiteRussian, SaltyDog, Sazerac, SeaBreeze, Philosopher, Toddy, Vesper, Zombie, Zorro, Cocktail, HotCoffee, IcedCoffee, Collins, Cooler, Daiquiri, EggNog, Espresso, Fizz, Flip, Julep, Lady, Martini, Mojito, Mule, Negroni, Paloma, Punch, Sangria, Screwdriver, Shake, Sidecar, Sour, Sunrise, Tonic];
 
 // filter out cocktails based on User's location's temperature and time 
 // push drink ID information from CocktailDB API 

@@ -476,17 +476,6 @@ var Tonic = {
 
 // store all unique cocktail variables into a master array of cocktails 
 var cocktails = [Americano, Aviation, Beach, BeesKnees, Bellini, BlackThorn, BloodyMary, BoraBora, Boxcar, Bramble, CorpseRiver2, Cosmopolitan, CubaLibre, DarkNStormy, Derby, FlyingDutchman, FlyingScotchman, French75, FrenchConnection, Gimlet, GinRickey, Gluehwein, Greyhound, Hemingway, Hot, IrishCream, IrishSpring, IrishRussian, Jitterbug, KentuckyColonel, LemonDrop, LongIslandIcedTea, MaiTai, Manhattan, Mimosa, MulledWine, OldFashioned, PinaColada, QueenElizabeth, Quentin, quickSand, BlackRussian, WhiteRussian, SaltyDog, Sazerac, SeaBreeze, Philosopher, Toddy, Vesper, Zombie, Zorro, Cocktail, HotCoffee, IcedCoffee, Collins, Cooler, Daiquiri, EggNog, Espresso, Fizz, Flip, Julep, Lady, Martini, Mojito, Mule, Negroni, Paloma, Punch, Sangria, Screwdriver, Shake, Sidecar, Sour, Sunrise, Tonic];
-
-// filter out cocktails based on User's location's temperature and time 
-// push drink ID information from CocktailDB API 
-var filteredCocktails = [];
-for (let i = 0; i < cocktails.length; i++) {
-    if ((cocktails[i].temperature.includes() === "HH") && (cocktails[i].time.includes() === "WM")) {
-        for (let j = 0; j < cocktails.length; j++) {
-            var filteredCocktails = filteredCocktails.push(getCocktail(cocktails[j].drinkID[j]));            
-        } 
-    }
-}
 //----Ellie's code----//
 
 // ----- Logan's Code ----- :)
@@ -496,6 +485,9 @@ var currentTemp; // Fahrenheit
 
 // Moment.js API https://momentjs.com/docs/#/displaying/
 var time = moment().format("HHmm") // 0130-2359 (12:00am - 11:59pm)
+console.log("Your current time is " + time);
+console.log(`------------------------------------`);
+
 
 // Geolocation API
 var geolocationOptions = {
@@ -555,3 +547,57 @@ function getCocktail(cocktailID) {
 
 // Calls
 navigator.geolocation.getCurrentPosition(getGeolocation, geolocationError, geolocationOptions); //Weather
+
+// Ellie's code as of 11/18/2020
+// translate user input to variables that could be called in filtering loop
+var userTemp;
+if (currentTemp>=85) {
+    userTemp = "HH";
+}
+else if ((currentTemp>=70)&&(currentTemp<85)){
+    userTemp = "LH";
+}
+else if ((currentTemp>=60)&&(currentTemp<70)){
+    userTemp = "WM";
+}
+else if ((currentTemp>=45)&&(currentTemp<60)){
+    userTemp = "BR";
+}
+else {
+    userTemp = "CD";
+}
+
+var userTime;
+if ((time>=600)&&(time<=859)) {
+    userTime = "EM";
+}
+else if ((time>=900)&&(time<=1159)) {
+    userTime = "LM";
+}
+else if ((time>=1200)&&(time<=1459)) {
+    userTime = "EA";
+}
+else if ((time>=1500)&&(time<=1759)) {
+    userTime = "LA";
+}
+else if ((time>=1800)&&(time<=2200)) {
+    userTime = "EV";
+}
+else {
+    userTime = "NT";
+}
+console.log(userTemp);
+console.log(userTime);
+
+// filter out cocktails based on User's location's temperature and time 
+// push drink ID information from CocktailDB API 
+var filteredCocktails = [];
+for (let i = 0; i < cocktails.length; i++) {
+    if ((cocktails[i].temperature.includes(userTemp)) && (cocktails[i].time.includes(userTime))) {
+        console.log(cocktails[i].drinkID);
+        for (let j = 0; j < cocktails[i].drinkID.length; j++) {
+            filteredCocktails.push(cocktails[i].drinkID[j]);
+        }
+    }
+}
+console.log(filteredCocktails);

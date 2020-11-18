@@ -456,6 +456,12 @@ var Smash = {
     time: "EA, LA, EV, NT"
 }
 
+var Sour = {
+    drinkID: ["11129", "11147", "11170", "11382", "11417", "11844", "12093", "12158", "12308", "12370", "11004", "13214", "13731", "14306", "16100", "17005"],
+    temperature: "HH, LH, WM",
+    time: "EA, LA, EV, NT"
+}
+
 var Sunrise = {
     drinkID: ["13621", "14578"],
     temperature: "LH, WM",

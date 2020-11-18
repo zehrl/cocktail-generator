@@ -307,13 +307,13 @@ var Zorro = {
 }
 
 var Cocktail = {
-    drinkID: ["11010", "11011", "11013", "11019", "11022", "11121", "11255", "11227", "11326", "11339",  "11470", "11472", "11476", "11542", "11664", "11720", "11959", "11963", "11983", "11985", "12186", "12198", "12224", "12418", "12420", "12434", "12706", "17229", "17834", "17838", "17256"],
+    drinkID: ["11010", "11011", "11013", "11019", "11022", "11121", "11255", "11227", "11326", "11339", "11470", "11472", "11476", "11542", "11664", "11720", "11959", "11963", "11983", "11985", "12186", "12198", "12224", "12418", "12420", "12434", "12706", "17229", "17834", "17838", "17256"],
     temperature: "LH, WM, BR",
     time: "LM, EA, LA, EV"
 }
 
 var HotCoffee = {
-    drinkID: ["12764", "13971", "14860", "15521", "15825", "16082", "16951"]
+    drinkID: ["12764", "13971", "14860", "15521", "15825", "16082", "16951"],
     temperature: "BR, CD",
     time: "EM, LM, NT"
 }
@@ -409,61 +409,61 @@ var Negroni = {
 }
 
 var Paloma = {
-    drinkID = ["17253", "178327", "178335"],
+    drinkID =["17253", "178327", "178335"],
     temperature: "HH, LH, WM",
     time: "LM, EA, LA, EV"
 }
 
 var Punch = {
-    drinkID = ["11786", "12087", "12870", "13058", "14364", "14978", "15849", "17182", "17191", "17214", "178312", "178329"],
+    drinkID =["11786", "12087", "12870", "13058", "14364", "14978", "15849", "17182", "17191", "17214", "178312", "178329"],
     temperature: "HH, LH",
     time: "LM, EA, LA, EV"
 }
 
 var Sangria = {
-    drinkID = ["13020", "13024", "13026"],
+    drinkID =["13020", "13024", "13026"],
     temperature: "WM, BR, CD",
     time: "LA, EV, NT"
 }
 
 var Screwdriver = {
-    drinkID = ["12162", "12091"],
+    drinkID =["12162", "12091"],
     temperature: "HH, LH, WM",
     time: "EM, LM, EA, LA"
 }
 
 var Shake = {
-    drinkID = ["14510", "15194", "15951"],
+    drinkID =["14510", "15194", "15951"],
     temperature: "HH, LH, WM",
     time: "EM, LM, EA"
 }
 
 var Sidecar = {
-    drinkID = ["11128", "12196", "12198"],
+    drinkID =["11128", "12196", "12198"],
     temperature: "LH, WM",
     time: "LA, EV, NT"
 }
 
 var Sling = {
-    drinkID = ["11146", "11415", "12214", "14482"],
+    drinkID =["11146", "11415", "12214", "14482"],
     temperature: "LH, WM",
     time: "EA, LA, EV, NT"
 }
 
 var Smash = {
-    drinkID = ["11129", "11147", "11170", "11382", "11417", "11844", "12093", "12158", "12308", "12370", "11004", "13214", "13731", "14306", "16100", "17005"],
+    drinkID =["11129", "11147", "11170", "11382", "11417", "11844", "12093", "12158", "12308", "12370", "11004", "13214", "13731", "14306", "16100", "17005"],
     temperature: "HH, LH, WM",
     time: "EA, LA, EV, NT"
 }
 
 var Sunrise = {
-    drinkID = ["13621", "14578"],
+    drinkID =["13621", "14578"],
     temperature: "LH, WM",
     time: "EM, LM, EA"
 }
 
 var Tonic = {
-    drinkID = ["11403", "12460"],
+    drinkID =["11403", "12460"],
     temperature: "HH, LH, WM",
     time: "LM, EA, LA, EV"
 }
@@ -477,8 +477,8 @@ var filteredCocktails = [];
 for (let i = 0; i < cocktails.length; i++) {
     if ((coktails[i].temperature.includes() === "HH") && (cocktails[i].time.includes() === "WM")) {
         for (let j = 0; j < cocktails.length; j++) {
-            var filteredCocktails = filteredCocktails.push(getCocktail(cocktails[j].drinkID[j]));            
-        } 
+            var filteredCocktails = filteredCocktails.push(getCocktail(cocktails[j].drinkID[j]));
+        }
     }
 }
 //----Ellie's code----//
@@ -517,7 +517,7 @@ function geolocationError(err) {
 // Weather API https://openweathermap.org/current
 function getWeather(longitude, latitude) {
     var apikey = "279ad54354e9b294cca24c90d19796a2";
-    var units = "imperial";
+    var units = "imperial";  // Displays fahrenheit
 
     var settings = {
         "url": `https://api.openweathermap.org/data/2.5/weather?lat=${latitude.toString()}&lon=${longitude.toString()}&units=${units}&appid=${apikey}`,
@@ -548,4 +548,33 @@ function getCocktail(cocktailID) {
 }
 
 // Calls
+navigator.geolocation.getCurrentPosition(getGeolocation, geolocationError, geolocationOptions);
+var cocktail = getCocktail("");
+
+function displayData() {
+    console.log(`Current Hour = ${time.hour}`);
+    console.log(`Current Minute = ${time.minute}`);
+    console.log(`Current Temperature = ${currentTemp}`);
+    console.log(cocktail);
+}
+
+var filteredCocktails = [];
+
+function getRandomDrinks(filteredCocktails) {
+    // select 5 random items from the filteredCocktails array
+    var recommendedDrinks = [];
+
+    for (var i = 0; i < 5; i++) {
+        var m = Math.floor(Math.random() * filteredCocktails.length);
+        recommendedDrinks.push(filteredCocktails[m]);
+
+        // excludes repeated values
+        filteredCocktails.splice(m, 1);
+    }
+
+    return recommendedDrinks;
+}
+
+getRandomDrinks(filteredCocktails);
+console.log(recommendedDrinks);
 navigator.geolocation.getCurrentPosition(getGeolocation, geolocationError, geolocationOptions); //Weather

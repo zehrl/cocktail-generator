@@ -481,7 +481,7 @@ var cocktails = [Americano, Aviation, Beach, BeesKnees, Bellini, BlackThorn, Blo
 // push drink ID information from CocktailDB API 
 var filteredCocktails = [];
 for (let i = 0; i < cocktails.length; i++) {
-    if ((coktails[i].temperature.includes() === "HH") && (cocktails[i].time.includes() === "WM")) {
+    if ((cocktails[i].temperature.includes() === "HH") && (cocktails[i].time.includes() === "WM")) {
         for (let j = 0; j < cocktails.length; j++) {
             var filteredCocktails = filteredCocktails.push(getCocktail(cocktails[j].drinkID[j]));            
         } 

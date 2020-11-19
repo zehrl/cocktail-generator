@@ -307,7 +307,7 @@ var Zorro = {
 }
 
 var Cocktail = {
-    drinkID: ["11010", "11011", "11013", "11019", "11022", "11121", "11255", "11227", "11326", "11339",  "11470", "11472", "11476", "11542", "11664", "11720", "11959", "11963", "11983", "11985", "12186", "12198", "12224", "12418", "12420", "12434", "12706", "17229", "17834", "17838", "17256"],
+    drinkID: ["11010", "11011", "11013", "11019", "11022", "11121", "11255", "11227", "11326", "11339", "11470", "11472", "11476", "11542", "11664", "11720", "11959", "11963", "11983", "11985", "12186", "12198", "12224", "12418", "12420", "12434", "12706", "17229", "17834", "17838", "17256"],
     temperature: "LH, WM, BR",
     time: "LM, EA, LA, EV"
 }
@@ -476,6 +476,7 @@ var Tonic = {
 
 // store all unique cocktail variables into a master array of cocktails 
 var cocktails = [Americano, Aviation, Beach, BeesKnees, Bellini, BlackThorn, BloodyMary, BoraBora, Boxcar, Bramble, CorpseRiver2, Cosmopolitan, CubaLibre, DarkNStormy, Derby, FlyingDutchman, FlyingScotchman, French75, FrenchConnection, Gimlet, GinRickey, Gluehwein, Greyhound, Hemingway, Hot, IrishCream, IrishSpring, IrishRussian, Jitterbug, KentuckyColonel, LemonDrop, LongIslandIcedTea, MaiTai, Manhattan, Mimosa, MulledWine, OldFashioned, PinaColada, QueenElizabeth, Quentin, quickSand, BlackRussian, WhiteRussian, SaltyDog, Sazerac, SeaBreeze, Philosopher, Toddy, Vesper, Zombie, Zorro, Cocktail, HotCoffee, IcedCoffee, Collins, Cooler, Daiquiri, EggNog, Espresso, Fizz, Flip, Julep, Lady, Martini, Mojito, Mule, Negroni, Paloma, Punch, Sangria, Screwdriver, Shake, Sidecar, Sour, Sunrise, Tonic];
+
 //----Ellie's code----//
 
 // ----- Logan's Code ----- :)
@@ -515,7 +516,7 @@ function geolocationError(err) {
 // Weather API https://openweathermap.org/current
 function getWeather(longitude, latitude) {
     var apikey = "279ad54354e9b294cca24c90d19796a2";
-    var units = "imperial";
+    var units = "imperial";  // Displays fahrenheit
 
     var settings = {
         "url": `https://api.openweathermap.org/data/2.5/weather?lat=${latitude.toString()}&lon=${longitude.toString()}&units=${units}&appid=${apikey}`,
@@ -546,6 +547,35 @@ function getCocktail(cocktailID) {
 }
 
 // Calls
+navigator.geolocation.getCurrentPosition(getGeolocation, geolocationError, geolocationOptions);
+var cocktail = getCocktail("");
+
+function displayData() {
+    console.log(`Current Hour = ${time.hour}`);
+    console.log(`Current Minute = ${time.minute}`);
+    console.log(`Current Temperature = ${currentTemp}`);
+    console.log(cocktail);
+}
+
+var filteredCocktails = [];
+
+function getRandomDrinks(filteredCocktails) {
+    // select 5 random items from the filteredCocktails array
+    var recommendedDrinks = [];
+
+    for (var i = 0; i < 5; i++) {
+        var m = Math.floor(Math.random() * filteredCocktails.length);
+        recommendedDrinks.push(filteredCocktails[m]);
+
+        // excludes repeated values
+        filteredCocktails.splice(m, 1);
+    }
+
+    return recommendedDrinks;
+}
+
+getRandomDrinks(filteredCocktails);
+console.log(recommendedDrinks);
 navigator.geolocation.getCurrentPosition(getGeolocation, geolocationError, geolocationOptions); //Weather
 
 // Ellie's code as of 11/18/2020

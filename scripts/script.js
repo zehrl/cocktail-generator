@@ -530,25 +530,9 @@ function getWeather(longitude, latitude) {
 
 }
 
-// Cocktaildb API https://www.thecocktaildb.com/api.php
-function getCocktail(cocktailID) {
-    var apikey = "1";
-
-    var settings = {
-        "url": `https://www.thecocktaildb.com/api/json/v1/${apikey}/lookup.php?i=${cocktailID}`,
-        "method": "GET",
-    };
-    console.log(settings);
-    $.ajax(settings).done(function (response) {
-        console.log(`response = `, response)
-        return response;
-    });
-
-}
-
 // Calls
 navigator.geolocation.getCurrentPosition(getGeolocation, geolocationError, geolocationOptions);
-var cocktail = getCocktail("");
+// var cocktail = getCocktail("");
 
 function displayData() {
     console.log(`Current Hour = ${time.hour}`);
@@ -560,23 +544,23 @@ function displayData() {
 var filteredCocktails = [];
 var recommendedDrinks = [];
 
-function getRandomDrinks(filteredCocktails) {
-    // select 5 random items from the filteredCocktails array
-    var recommendedDrinks = [];
+// function getRandomDrinks(filteredCocktails) {
+//     // select 5 random items from the filteredCocktails array
+//     var recommendedDrinks = [];
 
-    for (var i = 0; i < 5; i++) {
-        var m = Math.floor(Math.random() * filteredCocktails.length);
-        recommendedDrinks.push(filteredCocktails[m]);
+//     for (var i = 0; i < 5; i++) {
+//         var m = Math.floor(Math.random() * filteredCocktails.length);
+//         recommendedDrinks.push(filteredCocktails[m]);
 
-        // excludes repeated values
-        filteredCocktails.splice(m, 1);
-    }
+//         // excludes repeated values
+//         filteredCocktails.splice(m, 1);
+//     }
 
-    return recommendedDrinks;
-}
+//     return recommendedDrinks;
+// }
 
-getRandomDrinks(filteredCocktails);
-console.log(recommendedDrinks);
+// getRandomDrinks(filteredCocktails);
+// console.log(recommendedDrinks);
 navigator.geolocation.getCurrentPosition(getGeolocation, geolocationError, geolocationOptions); //Weather
 
 // Ellie's code as of 11/18/2020
@@ -617,19 +601,61 @@ else if ((time>=1800)&&(time<=2200)) {
 else {
     userTime = "NT";
 }
-console.log(userTemp);
-console.log(userTime);
+console.log("Temperature category: " + userTemp);
+console.log("Time category: " + userTime);
 
 // filter out cocktails based on User's location's temperature and time 
 // push drink ID information from CocktailDB API 
 var filteredCocktails = [];
 for (let i = 0; i < cocktails.length; i++) {
     if ((cocktails[i].temperature.includes(userTemp)) && (cocktails[i].time.includes(userTime))) {
-        console.log(cocktails[i].drinkID);
         for (let j = 0; j < cocktails[i].drinkID.length; j++) {
             filteredCocktails.push(cocktails[i].drinkID[j]);
         }
     }
 }
-console.log(filteredCocktails);
-console.log("Hey!");
+console.log("List of possible drinks: " + filteredCocktails);
+
+// Andrena's code
+var recommendedDrinks = [];
+function getRandomDrinks() {
+    // select 5 random items from the filteredCocktails array
+    for (var i = 0; i < 4; i++) {
+        var m = Math.floor(Math.random() * filteredCocktails.length);
+        recommendedDrinks.push(filteredCocktails[m]);
+        // excludes repeated values
+        filteredCocktails.splice(m, 1);
+    }
+    return recommendedDrinks;
+}
+getRandomDrinks(filteredCocktails);
+console.log("List of recommended drinks: " + recommendedDrinks);
+
+// Cocktaildb API https://www.thecocktaildb.com/api.php
+// feed drink ID from recommendedDrinks to API to get objects
+async function getCocktail(cocktailID) {
+    var apikey = "1";
+
+    var settings = {
+        "url": `https://www.thecocktaildb.com/api/json/v1/${apikey}/lookup.php?i=${cocktailID}`,
+        "method": "GET",
+    };
+    
+    hello=await $.ajax(settings).done(function (response) {
+        return response;
+    });
+    return hello;
+}
+
+var cocktailObjects = [];
+
+for (let i = 0; i < recommendedDrinks.length; i++) {
+    cocktailID = recommendedDrinks[i];
+    getCocktail(cocktailID).then((bread)=>{cocktailObjects.push(bread)
+        var name = cocktailObjects[i].drinks[0].strDrink;
+        var imageURL = cocktailObjects[i].drinks[0].strDrinkThumb;
+        console.log(name);
+        console.log(imageURL);
+    });
+}
+

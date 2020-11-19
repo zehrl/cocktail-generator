@@ -631,3 +631,4 @@ for (let i = 0; i < cocktails.length; i++) {
     }
 }
 console.log(filteredCocktails);
+console.log("Hey!");

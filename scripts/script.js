@@ -531,7 +531,7 @@ function getWeather(longitude, latitude) {
 }
 
 // Calls
-navigator.geolocation.getCurrentPosition(getGeolocation, geolocationError, geolocationOptions);
+// navigator.geolocation.getCurrentPosition(getGeolocation, geolocationError, geolocationOptions);
 // var cocktail = getCocktail("");
 
 function displayData() {
@@ -561,7 +561,7 @@ var recommendedDrinks = [];
 
 // getRandomDrinks(filteredCocktails);
 // console.log(recommendedDrinks);
-navigator.geolocation.getCurrentPosition(getGeolocation, geolocationError, geolocationOptions); //Weather
+// navigator.geolocation.getCurrentPosition(getGeolocation, geolocationError, geolocationOptions); //Weather
 
 // Ellie's code as of 11/18/2020
 // translate user input to variables that could be called in filtering loop
@@ -652,10 +652,15 @@ var cocktailObjects = [];
 for (let i = 0; i < recommendedDrinks.length; i++) {
     cocktailID = recommendedDrinks[i];
     getCocktail(cocktailID).then((bread)=>{cocktailObjects.push(bread)
-        var name = cocktailObjects[i].drinks[0].strDrink;
-        var imageURL = cocktailObjects[i].drinks[0].strDrinkThumb;
+        var name = bread.drinks[0].strDrink;
+        var imageURL = bread.drinks[0].strDrinkThumb;
+        $(`#card-result-name-0`).text(cocktailObjects[0].drinks[0].strDrink);
+        $(`#card-result-url-0`).attr("src", cocktailObjects[0].drinks[0].strDrinkThumb);
+
         console.log(name);
         console.log(imageURL);
+        console.log($("#card-result-name-1").text());
     });
 }
 
+// Set card html to objects

@@ -558,6 +558,7 @@ function displayData() {
 }
 
 var filteredCocktails = [];
+var recommendedDrinks = [];
 
 function getRandomDrinks(filteredCocktails) {
     // select 5 random items from the filteredCocktails array

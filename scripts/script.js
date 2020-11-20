@@ -484,8 +484,6 @@ var Tonic = {
 // store all unique cocktail variables into a master array of cocktails 
 var cocktails = [Americano, Aviation, Beach, BeesKnees, Bellini, BlackThorn, BloodyMary, BoraBora, Boxcar, Bramble, CorpseRiver2, Cosmopolitan, CubaLibre, DarkNStormy, Derby, FlyingDutchman, FlyingScotchman, French75, FrenchConnection, Gimlet, GinRickey, Gluehwein, Greyhound, Hemingway, Hot, IrishCream, IrishSpring, IrishRussian, Jitterbug, KentuckyColonel, LemonDrop, LongIslandIcedTea, MaiTai, Manhattan, Mimosa, MulledWine, OldFashioned, PinaColada, QueenElizabeth, Quentin, quickSand, BlackRussian, WhiteRussian, SaltyDog, Sazerac, SeaBreeze, Philosopher, Toddy, Vesper, Zombie, Zorro, Cocktail, HotCoffee, IcedCoffee, Collins, Cooler, Daiquiri, EggNog, Espresso, Fizz, Flip, Julep, Lady, Martini, Mojito, Mule, Negroni, Paloma, Punch, Sangria, Screwdriver, Shake, Sidecar, Sour, Sunrise, Tonic];
 
-// ----- Logan's Code ----- :)
-
 // Determine User's current time via Moment.js API https://momentjs.com/docs/#/displaying/
 var time = moment().format("HHmm") // 0130-2359 (12:00am - 11:59pm)
 console.log("Your current time is " + time);
@@ -637,8 +635,53 @@ function displayCocktails() {
             $(`#card-result-url-${i}`).attr("src", bread.drinks[0].strDrinkThumb);
     
             console.log("Drink Name: " + name + ", Image URL: " + imageURL);
+            // set the card result to local storage by passing cocktailDB object from API and the card result name
+            resultToLocalStorage(bread, `cardResult${i+1}`);
         });
     }
+}
+
+function resultToLocalStorage(cocktailDBObject, idName) {    
+    // pull name
+    var cocktailName = cocktailDBObject.drinks[0].strDrink;
+
+    // pull url
+    var cocktailImageUrl = cocktailDBObject.drinks[0].strDrinkThumb;
+
+    // pull glass
+    var glass = cocktailDBObject.drinks[0].strGlass;
+
+    // pull instructions
+    var instructions = cocktailDBObject.drinks[0].strInstructions;
+
+    // pull ingredients
+    var ingredientsArray = [];
+    for (let i = 1; i <= 15; i++) {
+        var ingredient = cocktailDBObject.drinks[0][`strIngredient${i}`];
+        if (ingredient !== null) {
+            ingredientsArray.push(ingredient);
+        }
+    }
+
+    // pull measurements
+    var measurementsArray = [];
+    for (let i = 1; i <= ingredientsArray.length; i++) {
+        var measurement = cocktailDBObject.drinks[0][`strMeasure${i}`];
+        measurementsArray.push(measurement);
+    }
+
+    // create results object to set in local storage
+    var results = {
+        cocktailName: cocktailName,
+        imageUrl: cocktailImageUrl,
+        glass: glass,
+        instructions: instructions,
+        ingredients: ingredientsArray,
+        measurements: measurementsArray
+    }
+
+    localStorage.setItem(idName, JSON.stringify(results));
+
 }
 
 // Calls

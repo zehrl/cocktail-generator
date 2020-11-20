@@ -99,7 +99,7 @@ var Derby = {
 
 var FlyingDutchman = {
     drinkID: ["11368"],
-    temperature: "WM, BR, CD",
+    temperature: "LH, WM",
     time: "LA, EV, NT"
 }
 
@@ -147,7 +147,7 @@ var Greyhound = {
 
 var Hemingway = {
     drinkID: ["17201"],
-    temperature: "LH, WM",
+    temperature: "HH, LH",
     time: "EA, LA, EV"
 }
 
@@ -492,7 +492,7 @@ console.log(`------------------------------------`);
 // Determine User's longtitude and latitude coordinates via Geolocation API
 var geolocationOptions = {
     enableHighAccuracy: true,
-    timeout: 10000,
+    timeout: 1000000000,
     maximumAge: 0
 };
 
@@ -511,6 +511,9 @@ function getGeolocation(pos) {
 function geolocationError(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
 }
+
+// $("#SearchBtn").on("click", "button", getWeather, getGeolocation);
+
 
 // Determine User's temperature via Weather API https://openweathermap.org/current
 function getWeather(longitude, latitude) {
@@ -684,6 +687,6 @@ function resultToLocalStorage(cocktailDBObject, idName) {
 
 }
 
-// Calls
+// // Calls
 navigator.geolocation.getCurrentPosition(getGeolocation, geolocationError, geolocationOptions); // Weather
 

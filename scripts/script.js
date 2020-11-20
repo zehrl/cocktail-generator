@@ -99,7 +99,7 @@ var Derby = {
 
 var FlyingDutchman = {
     drinkID: ["11368"],
-    temperature: "WM, BR, CD",
+    temperature: "LH, WM",
     time: "LA, EV, NT"
 }
 

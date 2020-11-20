@@ -645,6 +645,8 @@ function displayCocktails() {
             resultToLocalStorage(bread, `cardResult${i + 1}`);
         });
     }
+
+    window.location.href = "cocktail-results.html";
 }
 
 function resultToLocalStorage(cocktailDBObject, idName) {

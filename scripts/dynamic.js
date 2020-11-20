@@ -1,3 +1,11 @@
+$("#recipe1").on("click", function () {
+
+    console.log("click");
+
+    $("#displayName").text(cardResult1.concktailName);
+
+});
+
 
 // // 1. Event listerner function
 // $(".saveBtn").on("click", "button", storage);

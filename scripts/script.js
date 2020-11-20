@@ -1,5 +1,12 @@
-//----Ellie's code----//
-// declare unique cocktail variables, which contain information on drink IDs as well as best temperature and time to drink 
+// global variable declarations
+var currentTemp; // Fahrenheit
+var userTemp; 
+var userTime;
+var filteredCocktails = []; 
+var recommendedDrinks = [];
+var cocktailObjects = [];
+
+// unique cocktail variables, which contain information on drink IDs as well as best temperature and time to drink 
 var Americano = {
     drinkID: ["15941"],
     temperature: "LH, WM",
@@ -477,13 +484,12 @@ var Tonic = {
 // store all unique cocktail variables into a master array of cocktails 
 var cocktails = [Americano, Aviation, Beach, BeesKnees, Bellini, BlackThorn, BloodyMary, BoraBora, Boxcar, Bramble, CorpseRiver2, Cosmopolitan, CubaLibre, DarkNStormy, Derby, FlyingDutchman, FlyingScotchman, French75, FrenchConnection, Gimlet, GinRickey, Gluehwein, Greyhound, Hemingway, Hot, IrishCream, IrishSpring, IrishRussian, Jitterbug, KentuckyColonel, LemonDrop, LongIslandIcedTea, MaiTai, Manhattan, Mimosa, MulledWine, OldFashioned, PinaColada, QueenElizabeth, Quentin, quickSand, BlackRussian, WhiteRussian, SaltyDog, Sazerac, SeaBreeze, Philosopher, Toddy, Vesper, Zombie, Zorro, Cocktail, HotCoffee, IcedCoffee, Collins, Cooler, Daiquiri, EggNog, Espresso, Fizz, Flip, Julep, Lady, Martini, Mojito, Mule, Negroni, Paloma, Punch, Sangria, Screwdriver, Shake, Sidecar, Sour, Sunrise, Tonic];
 
-// Moment.js API https://momentjs.com/docs/#/displaying/
+// Determine User's current time via Moment.js API https://momentjs.com/docs/#/displaying/
 var time = moment().format("HHmm") // 0130-2359 (12:00am - 11:59pm)
 console.log("Your current time is " + time);
 console.log(`------------------------------------`);
 
-
-// // Geolocation API
+// Determine User's longtitude and latitude coordinates via Geolocation API
 var geolocationOptions = {
     enableHighAccuracy: true,
     timeout: 10000,
@@ -506,9 +512,7 @@ function geolocationError(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
 }
 
-// Weather API https://openweathermap.org/current
-var currentTemp; // Fahrenheit
-
+// Determine User's temperature via Weather API https://openweathermap.org/current
 function getWeather(longitude, latitude) {
     var apikey = "279ad54354e9b294cca24c90d19796a2";
     var units = "imperial";  // Displays fahrenheit
@@ -521,12 +525,12 @@ function getWeather(longitude, latitude) {
     $.ajax(settings).done(function (response) {
         currentTemp = response.main.temp;
         console.log(`Current Temp = ${currentTemp}`)
+        categorizeTemp();
+        categorizeTime();
+        filterCocktails();
+        displayCocktails();
     });
-
 }
-
-// Calls
-navigator.geolocation.getCurrentPosition(getGeolocation, geolocationError, geolocationOptions);
 
 function displayData() {
     console.log(`Current Hour = ${time.hour}`);
@@ -535,78 +539,75 @@ function displayData() {
     console.log(cocktail);
 }
 
-var filteredCocktails = [];
-var recommendedDrinks = [];
-
-navigator.geolocation.getCurrentPosition(getGeolocation, geolocationError, geolocationOptions); //Weather
-
-// Ellie's code as of 11/18/2020
-// translate user input to variables that could be called in filtering loop
-var userTemp;
-if (currentTemp>=85) {
-    userTemp = "HH";
-}
-else if ((currentTemp>=70)&&(currentTemp<85)){
-    userTemp = "LH";
-}
-else if ((currentTemp>=60)&&(currentTemp<70)){
-    userTemp = "WM";
-}
-else if ((currentTemp>=45)&&(currentTemp<60)){
-    userTemp = "BR";
-}
-else {
-    userTemp = "CD";
+// Translate User Temperature into one of the 5 distinct categories
+function categorizeTemp() {
+    if (currentTemp>=85) {
+        userTemp = "HH"; // Category: High Heat, 85+ degrees 
+    }
+    else if ((currentTemp>=70)&&(currentTemp<85)){
+        userTemp = "LH"; // Category: Low Heat, 70-85 degrees 
+    }
+    else if ((currentTemp>=60)&&(currentTemp<70)){
+        userTemp = "WM"; // Category: Warm, 60-70 degrees 
+    }
+    else if ((currentTemp>=45)&&(currentTemp<60)){
+        userTemp = "BR"; // Category: Brisk, 45-60 degrees 
+    }
+    else {
+        userTemp = "CD"; // Category: Cold, under 45 degrees
+    }
+    console.log("------------------------------------")
+    console.log("Temperature category: " + userTemp);
 }
 
-var userTime;
-if ((time>=600)&&(time<=859)) {
-    userTime = "EM";
+// Translate User Time into one of the 5 distinct categories
+function categorizeTime() {
+    if ((time>=600)&&(time<=859)) {
+        userTime = "EM"; // Category: Early Morning
+    }
+    else if ((time>=900)&&(time<=1159)) {
+        userTime = "LM"; // Category: Late Morning
+    }
+    else if ((time>=1200)&&(time<=1459)) {
+        userTime = "EA"; // Category: Early Afternoon
+    }
+    else if ((time>=1500)&&(time<=1759)) {
+        userTime = "LA"; // Category: Late Afternoon
+    }
+    else if ((time>=1800)&&(time<=2200)) {
+        userTime = "EV"; // Category: Evening
+    }
+    else {
+        userTime = "NT"; // Category: Night Time
+    }
+    console.log("Time category: " + userTime);
+    console.log("------------------------------------")
 }
-else if ((time>=900)&&(time<=1159)) {
-    userTime = "LM";
-}
-else if ((time>=1200)&&(time<=1459)) {
-    userTime = "EA";
-}
-else if ((time>=1500)&&(time<=1759)) {
-    userTime = "LA";
-}
-else if ((time>=1800)&&(time<=2200)) {
-    userTime = "EV";
-}
-else {
-    userTime = "NT";
-}
-console.log("Temperature category: " + userTemp);
-console.log("Time category: " + userTime);
 
-// filter out cocktails based on User's location's temperature and time 
-// push drink ID information from CocktailDB API 
-var filteredCocktails = [];
-for (let i = 0; i < cocktails.length; i++) {
-    if ((cocktails[i].temperature.includes(userTemp)) && (cocktails[i].time.includes(userTime))) {
-        for (let j = 0; j < cocktails[i].drinkID.length; j++) {
-            filteredCocktails.push(cocktails[i].drinkID[j]);
+// Filter out cocktails based on User's location's temperature and time; push drink ID information into a separate array
+function filterCocktails() {
+    for (let i = 0; i < cocktails.length; i++) {
+        if ((cocktails[i].temperature.includes(userTemp)) && (cocktails[i].time.includes(userTime))) {
+            for (let j = 0; j < cocktails[i].drinkID.length; j++) {
+                filteredCocktails.push(cocktails[i].drinkID[j]);
+            }
         }
     }
+    console.log("List of possible drink IDs: " + filteredCocktails);    
+    getRandomDrinks(filteredCocktails);
 }
-console.log("List of possible drinks: " + filteredCocktails);
 
-// Andrena's code
-var recommendedDrinks = [];
+// Select 4 random cocktails from filteredCocktails array
 function getRandomDrinks() {
-    // select 5 random items from the filteredCocktails array
     for (var i = 0; i < 4; i++) {
         var m = Math.floor(Math.random() * filteredCocktails.length);
         recommendedDrinks.push(filteredCocktails[m]);
-        // excludes repeated values
+        // exclude repeated values
         filteredCocktails.splice(m, 1);
     }
+    console.log("List of selected drink IDs: " + recommendedDrinks);
     return recommendedDrinks;
 }
-getRandomDrinks(filteredCocktails);
-console.log("List of recommended drinks: " + recommendedDrinks);
 
 // Cocktaildb API https://www.thecocktaildb.com/api.php
 // feed drink ID from recommendedDrinks to API to get objects
@@ -624,24 +625,21 @@ async function getCocktail(cocktailID) {
     return hello;
 }
 
-var cocktailObjects = [];
-
-for (let i = 0; i < recommendedDrinks.length; i++) {
-    cocktailID = recommendedDrinks[i];
-    getCocktail(cocktailID).then((bread)=>{cocktailObjects.push(bread)
-        var name = bread.drinks[0].strDrink;
-        var imageURL = bread.drinks[0].strDrinkThumb;
-        $(`#card-result-name-${i}`).text(bread.drinks[0].strDrink);
-        $(`#card-result-url-${i}`).attr("src", bread.drinks[0].strDrinkThumb);
-        console.log(name);
-        console.log(imageURL);
-        // console.log($("#card-result-name-1").text());
-       
-        // set the card result to local storage by passing cocktailDB object from API and the card result name
-        resultToLocalStorage(bread, `cardResult${i+1}`);
-    });
+function displayCocktails() {
+    for (let i = 0; i < recommendedDrinks.length; i++) {
+        cocktailID = recommendedDrinks[i];
+        getCocktail(cocktailID).then((bread)=>{cocktailObjects.push(bread)
+            var name = bread.drinks[0].strDrink;
+            var imageURL = bread.drinks[0].strDrinkThumb;
+            $(`#card-result-name-${i}`).text(bread.drinks[0].strDrink);
+            $(`#card-result-url-${i}`).attr("src", bread.drinks[0].strDrinkThumb);
+    
+            console.log("Drink Name: " + name + ", Image URL: " + imageURL);
+            // set the card result to local storage by passing cocktailDB object from API and the card result name
+            resultToLocalStorage(bread, `cardResult${i+1}`);
+        });
+    }
 }
-
 
 function resultToLocalStorage(cocktailDBObject, idName) {    
     // pull name
@@ -685,4 +683,7 @@ function resultToLocalStorage(cocktailDBObject, idName) {
     localStorage.setItem(idName, JSON.stringify(results));
 
 }
+
+// Calls
+navigator.geolocation.getCurrentPosition(getGeolocation, geolocationError, geolocationOptions); // Weather
 

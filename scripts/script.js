@@ -509,11 +509,9 @@ function getGeolocation(pos) {
 }
 
 function geolocationError(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
+    getWeather(-122.3321, 47.6062);
+    console.log(`Geolocation set to Seattle...`);
 }
-
-// $("#SearchBtn").on("click", "button", getWeather, getGeolocation);
-
 
 // Determine User's temperature via Weather API https://openweathermap.org/current
 function getWeather(longitude, latitude) {
@@ -649,14 +647,6 @@ async function displayCocktails() {
 
     window.location.href = "cocktail-results.html"
 }
-
-// async function myDisplay() {
-//     let myPromise = new Promise(function (myResolve, myReject) {
-//         myResolve("I love You !!");
-//     });
-//     document.getElementById("demo").innerHTML = await myPromise;
-// }
-// window.location.href = "cocktail-results.html";
 
 function resultToLocalStorage(cocktailDBObject, idName) {
     // pull name

@@ -630,8 +630,8 @@ async function getCocktail(cocktailID) {
 }
 
 async function displayCocktails() {
-    for (let i = 0; i < recommendedDrinks.length; i++) {   
-    cocktailID = recommendedDrinks[i];
+    for (let i = 0; i < recommendedDrinks.length; i++) {
+        cocktailID = recommendedDrinks[i];
 
         await getCocktail(cocktailID).then((bread) => {
             cocktailObjects.push(bread)
@@ -694,10 +694,7 @@ function resultToLocalStorage(cocktailDBObject, idName) {
 }
 
 // Event Listeners
-
 $("#searchBtn").on("click", function () {
     navigator.geolocation.getCurrentPosition(getGeolocation, geolocationError, geolocationOptions); // Weather
     $("#searchBtn").text("Please Wait...")
 })
-
-

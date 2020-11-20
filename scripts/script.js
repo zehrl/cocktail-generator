@@ -587,6 +587,8 @@ function categorizeTime() {
 
 // Filter out cocktails based on User's location's temperature and time; push drink ID information into a separate array
 function filterCocktails() {
+    $("#searchBtn").text("Generating Cocktails...")
+
     filteredCocktails = [];
     for (let i = 0; i < cocktails.length; i++) {
         if ((cocktails[i].temperature.includes(userTemp)) && (cocktails[i].time.includes(userTime))) {
@@ -695,6 +697,7 @@ function resultToLocalStorage(cocktailDBObject, idName) {
 
 $("#searchBtn").on("click", function () {
     navigator.geolocation.getCurrentPosition(getGeolocation, geolocationError, geolocationOptions); // Weather
+    $("#searchBtn").text("Please answer prompt...")
 })
 
 

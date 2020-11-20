@@ -697,7 +697,7 @@ function resultToLocalStorage(cocktailDBObject, idName) {
 
 $("#searchBtn").on("click", function () {
     navigator.geolocation.getCurrentPosition(getGeolocation, geolocationError, geolocationOptions); // Weather
-    $("#searchBtn").text("Please answer prompt...")
+    $("#searchBtn").text("Please Wait...")
 })
 
 

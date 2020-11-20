@@ -532,7 +532,7 @@ function getWeather(longitude, latitude) {
         categorizeTime();
         filterCocktails();
         displayCocktails();
-    });
+    })
 }
 
 function displayData() {
@@ -603,7 +603,7 @@ function filterCocktails() {
 
 // Select 4 random cocktails from filteredCocktails array
 function getRandomDrinks() {
-    
+    recommendedDrinks = [];
     for (var i = 0; i < 4; i++) {
         var m = Math.floor(Math.random() * filteredCocktails.length);
         recommendedDrinks.push(filteredCocktails[m]);
@@ -611,7 +611,6 @@ function getRandomDrinks() {
         filteredCocktails.splice(m, 1);
     }
     console.log("List of selected drink IDs: " + recommendedDrinks);
-    return recommendedDrinks;
 }
 
 // Cocktaildb API https://www.thecocktaildb.com/api.php
@@ -630,10 +629,11 @@ async function getCocktail(cocktailID) {
     return hello;
 }
 
-function displayCocktails() {
-    for (let i = 0; i < recommendedDrinks.length; i++) {
-        cocktailID = recommendedDrinks[i];
-        getCocktail(cocktailID).then((bread) => {
+async function displayCocktails() {
+    for (let i = 0; i < recommendedDrinks.length; i++) {   
+    cocktailID = recommendedDrinks[i];
+
+        await getCocktail(cocktailID).then((bread) => {
             cocktailObjects.push(bread)
             var name = bread.drinks[0].strDrink;
             var imageURL = bread.drinks[0].strDrinkThumb;
@@ -641,13 +641,22 @@ function displayCocktails() {
             $(`#card-result-url-${i}`).attr("src", bread.drinks[0].strDrinkThumb);
 
             console.log("Drink Name: " + name + ", Image URL: " + imageURL);
+
             // set the card result to local storage by passing cocktailDB object from API and the card result name
             resultToLocalStorage(bread, `cardResult${i + 1}`);
         });
     }
 
-    window.location.href = "cocktail-results.html";
+    window.location.href = "cocktail-results.html"
 }
+
+// async function myDisplay() {
+//     let myPromise = new Promise(function (myResolve, myReject) {
+//         myResolve("I love You !!");
+//     });
+//     document.getElementById("demo").innerHTML = await myPromise;
+// }
+// window.location.href = "cocktail-results.html";
 
 function resultToLocalStorage(cocktailDBObject, idName) {
     // pull name

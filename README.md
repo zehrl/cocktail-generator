@@ -19,11 +19,12 @@ Ladies and gentleman, that is where The Cocktail Generator comes in!
 Cocktail Generator is a web application that recommends a list of cocktails that are appropriate to the users location & time zone. A couple of button clicks gets you four, well curated, cocktail suggestions with pictures and recipes! Four is a manageable amount of options last we checked, and if you want more, you can just keep running searches! 
 
 This application was created with the following User Story and Acceptance Criteria in mind:
-
+```
 AS A person who is making a cocktail drink
 I WANT to receive cocktail recommendations based on the time of day and temperature outside
 SO THAT I can make a delicious drink
-
+```
+```
 GIVEN I want a seasonal cocktail recommendation
 WHEN I press the “search cocktails” button
 THEN I expect several cocktail suggestions based on temperature and time to appear
@@ -31,9 +32,12 @@ WHEN a cocktail item is shown
 THEN I am presented with a picture of the cocktail, cocktail name, “show recipe” button, and “save” button 
 WHEN I click on the “show recipe” button
 THEN I am presented with instructions, required ingredients, and serving glass suggestions
+```
 
 ![image](images/1HomePage.png)
+
 ![image](images/2SearchResults.png)
+
 ![image](images/3Recipe.png)
 
 ## Installation

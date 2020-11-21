@@ -492,7 +492,7 @@ console.log(`------------------------------------`);
 // Determine User's longtitude and latitude coordinates via Geolocation API
 var geolocationOptions = {
     enableHighAccuracy: true,
-    timeout: 10000,
+    timeout: 100000000,
     maximumAge: 0
 };
 

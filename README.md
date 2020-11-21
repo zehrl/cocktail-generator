@@ -2,6 +2,7 @@
 ## Table of Contents
 - [cocktail-generator](#cocktail-generator)
   - [Table of Contents](#table-of-contents)
+  - [Project Location](#project-location)
   - [Motivation](#motivation)
   - [Description and Usage](#description-and-usage)
   - [Installation](#installation)
@@ -9,7 +10,12 @@
   - [Credits](#credits)
   - [Resources](#resources)
   - [License](#license)
-  
+
+## Project Location
+
+* [Deployed](https://zehrl.github.io/cocktail-generator/)
+* [GitHub Repo](https://github.com/zehrl/cocktail-generator)
+
 ## Motivation 
 The craft cocktail renaissance had gained a massive amount of steam in the decade leading up to March of 2020 before COVID-19 devastated the Seattle bar and restaurant scene. With many of Seattle’s most prominent drinkeries put out of business, many of their former patrons are now stuck at home with the desire to drink cocktails and, in many cases, a lack of experience making them. Flipping through cocktail recipes can be fun, but there are times when the sheer number of options leads to a ‘Netflix Paradox of Choice’-type situation –you know, the one where the user wastes all the time they have to watch something looking for that right something to watch.
 
@@ -20,12 +26,12 @@ Cocktail Generator is a web application that recommends a list of cocktails that
 
 This application was created with the following User Story and Acceptance Criteria in mind:
 ```
-AS A person who is making a cocktail drink
-I WANT to receive cocktail recommendations based on the time of day and temperature outside
-SO THAT I can make a delicious drink
+AS A person who wants to make an alcoholic beverage
+I WANT to receive drink recipe recommendations which take into account time of day and the weather
+SO THAT I can make a drink that’s right for the occasion 
 ```
 ```
-GIVEN I want a seasonal cocktail recommendation
+GIVEN I want a logical cocktail recommendation
 WHEN I press the “search cocktails” button
 THEN I expect several cocktail suggestions based on temperature and time to appear
 WHEN a cocktail item is shown
@@ -65,8 +71,10 @@ Some future add-ons that would enhance our application include:
 - Ellie Fu-Hinthorn (https://github.com/elliefh)
 
 ## Resources
-- UW Bootcamp (https://www.w3schools.com)
-- W3 Schools (https://bootcamp.uw.edu)
+- OpenWeather (API): https://openweathermap.org/ 
+- Moment.js (API): https://momentjs.com/ 
+- TheCocktailDB (API): https://www.thecocktaildb.com/api.php 
+- iStock (Background Image): https://www.istockphoto.com/ 
 
 ## License
 Copyright (c) [2020] [Gavin Calkins, Logan Zehr, Andrena Juric, Michael Bageant, Ellie Fu-Hinthorn]

@@ -1,8 +1,8 @@
 // global variable declarations
 var currentTemp; // Fahrenheit
-var userTemp; 
+var userTemp;
 var userTime;
-var filteredCocktails = []; 
+var filteredCocktails = [];
 var recommendedDrinks = [];
 var cocktailObjects = [];
 
@@ -99,7 +99,7 @@ var Derby = {
 
 var FlyingDutchman = {
     drinkID: ["11368"],
-    temperature: "WM, BR, CD",
+    temperature: "LH, WM",
     time: "LA, EV, NT"
 }
 
@@ -147,7 +147,7 @@ var Greyhound = {
 
 var Hemingway = {
     drinkID: ["17201"],
-    temperature: "LH, WM",
+    temperature: "HH, LH",
     time: "EA, LA, EV"
 }
 
@@ -492,7 +492,7 @@ console.log(`------------------------------------`);
 // Determine User's longtitude and latitude coordinates via Geolocation API
 var geolocationOptions = {
     enableHighAccuracy: true,
-    timeout: 100000000,
+    timeout: 1000000000,
     maximumAge: 0
 };
 
@@ -509,7 +509,8 @@ function getGeolocation(pos) {
 }
 
 function geolocationError(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
+    getWeather(-122.3321, 47.6062);
+    console.log(`Geolocation set to Seattle...`);
 }
 
 // Determine User's temperature via Weather API https://openweathermap.org/current
@@ -529,7 +530,7 @@ function getWeather(longitude, latitude) {
         categorizeTime();
         filterCocktails();
         displayCocktails();
-    });
+    })
 }
 
 function displayData() {
@@ -541,16 +542,16 @@ function displayData() {
 
 // Translate User Temperature into one of the 5 distinct categories
 function categorizeTemp() {
-    if (currentTemp>=85) {
+    if (currentTemp >= 85) {
         userTemp = "HH"; // Category: High Heat, 85+ degrees 
     }
-    else if ((currentTemp>=70)&&(currentTemp<85)){
+    else if ((currentTemp >= 70) && (currentTemp < 85)) {
         userTemp = "LH"; // Category: Low Heat, 70-85 degrees 
     }
-    else if ((currentTemp>=60)&&(currentTemp<70)){
+    else if ((currentTemp >= 60) && (currentTemp < 70)) {
         userTemp = "WM"; // Category: Warm, 60-70 degrees 
     }
-    else if ((currentTemp>=45)&&(currentTemp<60)){
+    else if ((currentTemp >= 45) && (currentTemp < 60)) {
         userTemp = "BR"; // Category: Brisk, 45-60 degrees 
     }
     else {
@@ -562,19 +563,19 @@ function categorizeTemp() {
 
 // Translate User Time into one of the 5 distinct categories
 function categorizeTime() {
-    if ((time>=600)&&(time<=859)) {
+    if ((time >= 600) && (time <= 859)) {
         userTime = "EM"; // Category: Early Morning
     }
-    else if ((time>=900)&&(time<=1159)) {
+    else if ((time >= 900) && (time <= 1159)) {
         userTime = "LM"; // Category: Late Morning
     }
-    else if ((time>=1200)&&(time<=1459)) {
+    else if ((time >= 1200) && (time <= 1459)) {
         userTime = "EA"; // Category: Early Afternoon
     }
-    else if ((time>=1500)&&(time<=1759)) {
+    else if ((time >= 1500) && (time <= 1759)) {
         userTime = "LA"; // Category: Late Afternoon
     }
-    else if ((time>=1800)&&(time<=2200)) {
+    else if ((time >= 1800) && (time <= 2200)) {
         userTime = "EV"; // Category: Evening
     }
     else {
@@ -586,6 +587,9 @@ function categorizeTime() {
 
 // Filter out cocktails based on User's location's temperature and time; push drink ID information into a separate array
 function filterCocktails() {
+    $("#searchBtn").text("Generating Cocktails...")
+
+    filteredCocktails = [];
     for (let i = 0; i < cocktails.length; i++) {
         if ((cocktails[i].temperature.includes(userTemp)) && (cocktails[i].time.includes(userTime))) {
             for (let j = 0; j < cocktails[i].drinkID.length; j++) {
@@ -593,12 +597,13 @@ function filterCocktails() {
             }
         }
     }
-    console.log("List of possible drink IDs: " + filteredCocktails);    
-    getRandomDrinks(filteredCocktails);
+    console.log("List of possible drink IDs: " + filteredCocktails);
+    getRandomDrinks();
 }
 
 // Select 4 random cocktails from filteredCocktails array
 function getRandomDrinks() {
+    recommendedDrinks = [];
     for (var i = 0; i < 4; i++) {
         var m = Math.floor(Math.random() * filteredCocktails.length);
         recommendedDrinks.push(filteredCocktails[m]);
@@ -606,7 +611,6 @@ function getRandomDrinks() {
         filteredCocktails.splice(m, 1);
     }
     console.log("List of selected drink IDs: " + recommendedDrinks);
-    return recommendedDrinks;
 }
 
 // Cocktaildb API https://www.thecocktaildb.com/api.php
@@ -618,30 +622,35 @@ async function getCocktail(cocktailID) {
         "url": `https://www.thecocktaildb.com/api/json/v1/${apikey}/lookup.php?i=${cocktailID}`,
         "method": "GET",
     };
-    
-    hello=await $.ajax(settings).done(function (response) {
+
+    hello = await $.ajax(settings).done(function (response) {
         return response;
     });
     return hello;
 }
 
-function displayCocktails() {
+async function displayCocktails() {
     for (let i = 0; i < recommendedDrinks.length; i++) {
         cocktailID = recommendedDrinks[i];
-        getCocktail(cocktailID).then((bread)=>{cocktailObjects.push(bread)
+
+        await getCocktail(cocktailID).then((bread) => {
+            cocktailObjects.push(bread)
             var name = bread.drinks[0].strDrink;
             var imageURL = bread.drinks[0].strDrinkThumb;
             $(`#card-result-name-${i}`).text(bread.drinks[0].strDrink);
             $(`#card-result-url-${i}`).attr("src", bread.drinks[0].strDrinkThumb);
-    
+
             console.log("Drink Name: " + name + ", Image URL: " + imageURL);
+
             // set the card result to local storage by passing cocktailDB object from API and the card result name
-            resultToLocalStorage(bread, `cardResult${i+1}`);
+            resultToLocalStorage(bread, `cardResult${i + 1}`);
         });
     }
+
+    window.location.href = "cocktail-results.html"
 }
 
-function resultToLocalStorage(cocktailDBObject, idName) {    
+function resultToLocalStorage(cocktailDBObject, idName) {
     // pull name
     var cocktailName = cocktailDBObject.drinks[0].strDrink;
 
@@ -684,6 +693,8 @@ function resultToLocalStorage(cocktailDBObject, idName) {
 
 }
 
-// Calls
-navigator.geolocation.getCurrentPosition(getGeolocation, geolocationError, geolocationOptions); // Weather
-
+// Event Listeners
+$("#searchBtn").on("click", function () {
+    navigator.geolocation.getCurrentPosition(getGeolocation, geolocationError, geolocationOptions); // Weather
+    $("#searchBtn").text("Please Wait...")
+})

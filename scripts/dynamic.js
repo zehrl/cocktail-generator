@@ -1,23 +1,24 @@
+var getCardResultOne = JSON.parse(localStorage.getItem("cardResult1"));
 
-// // 1. Event listerner function
-// $(".saveBtn").on("click", "button", storage);
+var getCardResultTwo = JSON.parse(localStorage.getItem("cardResult2"));
 
-// // 2. Save function
-// function storage(event) {
+var getCardResultThree = JSON.parse(localStorage.getItem("cardResult3"));
 
-//     // Prevent the page from reloading
-//     event.preventDefault();
+var getCardResultFour = JSON.parse(localStorage.getItem("cardResult4"));
 
-//     // Save the data-hour value
-//     var saveButtonClick = $(this).data("hour");
 
-//     // Query the information in the text area element with .prev
-//     var getInformation = $(this).prev().val();
+$("#recipe1").on("click", function () {
+    console.log("recipe1");
+});
 
-//     // Save the the hour value and textarea information into storage
-//     localStorage.setItem("Textarea-" + SaveButtonClick, getInformation);
-// };
+$("#recipe2").on("click", function () {
+    console.log("recipe2");
+});
 
-// // 3. Function for printing text from local storage
-// // var printText = localStorage.getItem("Textarea-" + i);
-// // $("#userInput" + i).text(printText);
+$("#recipe3").on("click", function () {
+    console.log("recipe3");
+});
+
+$("#recipe4").on("click", function () {
+    console.log("recipe4");
+});
